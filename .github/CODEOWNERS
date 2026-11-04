@@ -1,6 +1,6 @@
-/ai-vision/  @HARS-graduation/graduation-project/vision-team
-/ml/         @HARS-graduation/graduation-project/ml-team
-/backend/    @HARS-graduation/graduation-project/backend-team @HARS-graduation/graduation-project/qa-team
-/frontend/   @HARS-graduation/graduation-project/frontend-team
-/tests/      @HARS-graduation/graduation-project/qa-team
-/docs/       @HARS-graduation/graduation-project/vision-team @HARS-graduation/graduation-project/ml-team
+/ai-vision/  @HARS-graduation/vision-team
+/ml/         @HARS-graduation/ml-team
+/backend/    @HARS-graduation/backend-team @HARS-graduation/qa-team
+/frontend/   @HARS-graduation/frontend-team
+/tests/      @HARS-graduation/qa-team
+/docs/       @HARS-graduation/vision-team @HARS-graduation/ml-team
