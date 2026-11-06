@@ -3,4 +3,6 @@
 /backend/    @HARS-graduation/backend-team @HARS-graduation/qa-team
 /frontend/   @HARS-graduation/frontend-team
 /tests/      @HARS-graduation/qa-team
-/docs/       @HARS-graduation/vision-team @HARS-graduation/ml-team
+/docs/ai/        @HARS-graduation/vision-team @HARS-graduation/ml-team
+/docs/backend/   @HARS-graduation/backend-team
+/docs/frontend/  @HARS-graduation/frontend-team
