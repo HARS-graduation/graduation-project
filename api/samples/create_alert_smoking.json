@@ -1,0 +1,11 @@
+{
+  "event_id": "b3a4c1e2-77d9-4f0a-8e51-0c9d2a6f4b18",
+  "event_type": "smoking",
+  "camera_id": "CAM-004",
+  "timestamp": "2026-10-27T16:21:45.500Z",
+  "confidence": 0.73,
+  "track_id": "trk-04",
+  "global_id": null,
+  "clip_uri": "s3://surveillance-alerts/2026/10/27/CAM-004/b3a4c1e2.mp4",
+  "reason": "cigarette detected in 4 consecutive frames near parking entrance"
+}

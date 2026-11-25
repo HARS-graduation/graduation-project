@@ -1,0 +1,164 @@
+// Smart College Surveillance Platform - Sprint 1 CORE schema
+// Open in https://dbdiagram.io or render with:
+//   npx @softwaretechnik/dbml-renderer -i db/schema.dbml -o docs/diagrams/er-core.svg
+// Keep in sync with db/schema.postgres.sql (source of truth).
+
+Enum event_type {
+  fight
+  smoking
+  camera_disconnected
+  camera_frozen
+  person_handoff
+}
+
+Enum alert_status {
+  new
+  confirmed
+  dismissed
+}
+
+Enum camera_status {
+  online
+  offline
+  frozen
+  unknown
+}
+
+Enum user_role {
+  security_operator
+  college_admin
+  system_admin
+}
+
+Table sites {
+  site_id text [pk, note: 'BUC-MAIN']
+  name text [not null]
+  timezone text [not null, default: 'Africa/Cairo']
+  address text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Note: 'One college today; schema already multi-site'
+}
+
+Table users {
+  user_id uuid [pk, default: `gen_random_uuid()`]
+  site_id text [note: 'NULL = all sites']
+  email text [not null, unique, note: 'unique on lower(email)']
+  full_name text [not null]
+  role user_role [not null, default: 'security_operator']
+  password_hash text [not null, note: 'Argon2id/bcrypt, never returned']
+  is_active boolean [not null, default: true]
+  last_login_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Note: 'Accounts are deactivated, never deleted'
+}
+
+Table cameras {
+  camera_id text [pk, note: 'CAM-001, globally unique, never reused']
+  site_id text [not null]
+  name text [not null]
+  zone text [not null]
+  latitude double [not null]
+  longitude double [not null]
+  geom geography [note: 'Point, 4326, set by trigger']
+  stream_path text [not null, unique, note: 'MediaMTX path']
+  rtsp_url text [note: 'sensitive, internal only']
+  fps_target numeric [not null, default: 25]
+  status camera_status [not null, default: 'unknown']
+  last_seen_at timestamptz
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (last_seen_at) [name: 'cameras_attention_idx', note: 'partial: active AND status != online']
+  }
+}
+
+Table camera_links {
+  from_camera_id text [not null]
+  to_camera_id text [not null]
+  transit_seconds integer [not null, note: 'measured on site']
+  transit_tolerance_seconds integer [not null, default: 5]
+  distance_m numeric
+  is_bidirectional boolean [not null, default: true]
+  measured_at date
+  notes text
+
+  indexes {
+    (from_camera_id, to_camera_id) [pk]
+    (to_camera_id) [name: 'camera_links_reverse_idx']
+  }
+
+  Note: 'Camera graph; camera_edges view exposes both directions'
+}
+
+Table alerts {
+  event_id uuid [pk, note: 'producer-generated idempotency key']
+  event_type event_type [not null]
+  camera_id text [not null]
+  occurred_at timestamptz [not null, note: 'API field: timestamp']
+  confidence numeric [not null, note: '0..1 with 3 decimals']
+  track_id text [note: 'ByteTrack, camera-local']
+  global_id text [note: 'nullable, no FK on purpose']
+  clip_uri text [note: 'optional in Sprint 1']
+  reason text [note: 'explainable alert text']
+  status alert_status [not null, default: 'new']
+  status_by uuid [note: 'required when decided']
+  status_at timestamptz [note: 'required when decided']
+  received_at timestamptz [not null, default: `now()`]
+  raw_payload jsonb [not null, default: `'{}'`]
+
+  indexes {
+    (status, occurred_at) [name: 'alerts_status_time_idx']
+    (camera_id, occurred_at) [name: 'alerts_camera_time_idx']
+    (global_id, occurred_at) [name: 'alerts_global_time_idx', note: 'partial: global_id IS NOT NULL']
+  }
+
+  Note: 'One row per real occurrence; decisions are final'
+}
+
+Table alert_actions {
+  action_id bigserial [pk]
+  event_id uuid [not null]
+  actor_user_id uuid [note: 'NULL only for system created']
+  action text [not null, note: 'created | confirmed | dismissed | commented | reopened']
+  from_status alert_status
+  to_status alert_status
+  note text
+  created_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (event_id, created_at) [name: 'alert_actions_event_idx']
+  }
+
+  Note: 'Append-only audit trail + human-in-the-loop labels'
+}
+
+Table camera_health_events {
+  health_id bigserial [pk]
+  camera_id text [not null]
+  previous_status camera_status
+  new_status camera_status [not null]
+  reason text
+  detected_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (camera_id, detected_at) [name: 'camera_health_camera_time_idx']
+  }
+
+  Note: 'One row per real state change, written by set_camera_status()'
+}
+
+Ref: users.site_id > sites.site_id
+Ref: cameras.site_id > sites.site_id
+Ref: alerts.camera_id > cameras.camera_id
+Ref: alerts.status_by > users.user_id
+Ref: alert_actions.event_id > alerts.event_id
+Ref: alert_actions.actor_user_id > users.user_id
+Ref: camera_links.from_camera_id > cameras.camera_id
+Ref: camera_links.to_camera_id > cameras.camera_id
+Ref: camera_health_events.camera_id > cameras.camera_id

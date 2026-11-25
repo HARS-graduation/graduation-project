@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Progress Overview - Mohamed Gehad</title>
+<style>
+  @page { size: A4; margin: 11mm; }
+  *{box-sizing:border-box}
+  body{font-family:"Segoe UI", Tahoma, Arial, sans-serif; color:#16233a; margin:0; font-size:12px; line-height:1.4;}
+  .hero{background:#0f1f38; color:#fff; border-radius:18px; padding:22px 25px; border-top:6px solid #0070c9;}
+  h1{margin:0 0 5px; font-size:25px; line-height:1.2}
+  .hero p{margin:0;color:#c7d7f2;font-size:12px}
+  .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:12px;border:1px solid #b9d9ff;border-radius:12px;overflow:hidden;background:#f4f9ff}
+  .meta div{padding:10px;border-right:1px solid #b9d9ff}.meta div:last-child{border-right:none}
+  .k{font-size:9px;letter-spacing:.7px;color:#5a6b86;text-transform:uppercase;font-weight:700}.v{font-size:12px;font-weight:700;margin-top:2px}
+  h2{color:#0f1f38; font-size:16px; border-bottom:3px solid #0070c9; padding-bottom:6px; margin:17px 0 7px}
+  p{margin:6px 0}.lead{background:#f8fbff;border-left:5px solid #0070c9;border-radius:10px;padding:11px 13px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+  .stat{text-align:center;border:1px solid #d8e6f5;border-radius:10px;padding:11px;background:#f8fbff}.stat b{display:block;font-size:22px;color:#0070c9}.stat span{font-size:9px;color:#52627b;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:10px;margin:7px 0}
+  th{background:#0f1f38;color:#fff;text-align:left;padding:7px;font-size:9px;text-transform:uppercase}
+  td{padding:7px;border-bottom:1px solid #e6eef8;vertical-align:top}tr:nth-child(even) td{background:#f7faff}
+  ul{margin:6px 0;padding-left:18px}li{margin:3px 0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .card{border:1px solid #d8e6f5;border-radius:10px;padding:10px;background:#f8fbff}.card h3{margin:0 0 4px;color:#0070c9;font-size:13px}
+  .footer{border-top:1px solid #d8e6f5;margin-top:15px;padding-top:7px;color:#6b7a93;font-size:9px;display:flex;justify-content:space-between}
+  @media print{.card,table,.stat,.lead{break-inside:avoid}}
+</style>
+</head><body>
+<div class="hero"><h1>Progress Overview</h1><p>Cloud Surveillance and Smart Security Platform - College Scope</p></div>
+<div class="meta"><div><div class="k">Name</div><div class="v">Mohamed Gehad Abdelmonem</div></div><div><div class="k">Role</div><div class="v">Backend and Frontend</div></div><div><div class="k">Date</div><div class="v">8 November 2026</div></div></div>
+
+<h2>Short summary</h2>
+<div class="lead">The database design and the proposed API contract are complete and tested. The next step depends on the team agreeing on the AI data fields and the dashboard design. I have not started the production API because we are waiting for the project concept to be approved.</div>
+<div class="grid"><div class="stat"><b>12</b><span>Tables designed</span></div><div class="stat"><b>21</b><span>Database checks passed</span></div><div class="stat"><b>17</b><span>API tests passed</span></div></div>
+
+<h2>Work completed</h2>
+<table><tr><th>Area</th><th>What was done</th><th>Status</th></tr>
+<tr><td>Database design</td><td>7 core tables, 5 Phase-2 tables, ENUMs, foreign keys, indexes, PostGIS preparation, and 2 write functions for camera status and operator decisions.</td><td>Done</td></tr>
+<tr><td>ER diagram</td><td>Generated from the schema source and documented in the design files.</td><td>Done</td></tr>
+<tr><td>API contract</td><td>Created a clear proposal for requests, responses, error handling and idempotent retries.</td><td>Proposed</td></tr>
+<tr><td>API prototype</td><td>Built a small FastAPI and SQLite prototype to prove the event contract is usable.</td><td>Done, test only</td></tr>
+<tr><td>Testing</td><td>Validated the schema on PostgreSQL 16 and ran the prototype test suite.</td><td>21 and 17 passed</td></tr></table>
+
+<div class="two">
+  <div class="card"><h3>Produced files</h3><ul><li>Schema and Phase-2 DDL</li><li>Seed data and DBML source</li><li>ER diagram in SVG and PNG</li><li>Database design and API contract documents</li><li>Validation scripts and test evidence</li></ul></div>
+  <div class="card"><h3>Not started yet</h3><ul><li>Production PostgreSQL API</li><li>Field agreement with Ahmed</li><li>Dashboard coordination with Mohamed Ezzat</li><li>JWT and RBAC production setup</li></ul></div>
+</div>
+
+<h2>What blocks the next step</h2>
+<ul><li>Ahmed has not provided the final tracking JSON, so the fields cannot be confirmed.</li><li>Mohamed Ezzat has not provided the dashboard display checklist, so integration notes cannot be finalized.</li><li>The production API will not start until the project concept and database design are approved.</li></ul>
+
+<h2>Next step after approval</h2>
+<p>Apply the schema to PostgreSQL, replace the prototype with the production API, connect the AI service and dashboard, then test the full flow.</p>
+<div class="footer"><span>Cloud Surveillance and Smart Security Platform</span><span>Mohamed Gehad Abdelmonem</span></div>
+</body></html>

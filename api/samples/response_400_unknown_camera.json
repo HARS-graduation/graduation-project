@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "unknown_camera",
+    "message": "Camera 'CAM-999' is not registered or is disabled. Register it with POST /api/v1/cameras first.",
+    "details": {
+      "camera_id": "CAM-999"
+    }
+  }
+}

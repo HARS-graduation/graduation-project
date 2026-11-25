@@ -1,0 +1,11 @@
+{
+  "event_id": "5e7f2c34-9d81-4a6b-b0c2-3f1d8e5a7c90",
+  "event_type": "person_handoff",
+  "camera_id": "CAM-002",
+  "timestamp": "2026-10-27T14:33:02.480Z",
+  "confidence": 0.91,
+  "track_id": "trk-12",
+  "global_id": "GID-000001",
+  "clip_uri": null,
+  "reason": "matched exit from CAM-001 after 9.6s (expected 10s +/- 3s), cosine similarity 0.88"
+}

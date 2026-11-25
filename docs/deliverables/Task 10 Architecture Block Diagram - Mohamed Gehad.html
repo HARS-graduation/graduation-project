@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Task 10 - Architecture Block Diagram</title>
+<style>
+  @page { size: A4 landscape; margin: 4mm; }
+  *{box-sizing:border-box}
+  body{font-family:"Segoe UI", Tahoma, Arial, sans-serif; color:#16233a; margin:0; font-size:9px; line-height:1.25;}
+  .hero{background:#0f1f38; color:#fff; border-radius:8px; padding:9px 12px; border-top:5px solid #0070c9; margin-bottom:6px;}
+  h1{margin:0 0 2px; font-size:16px; line-height:1.1}
+  .hero p{margin:0;color:#c7d7f2;font-size:9px}
+  .meta{display:flex; gap:5px; margin-bottom:5px;}
+  .meta div{flex:1; border:1px solid #b9d9ff; border-radius:7px; padding:5px 7px; background:#f4f9ff; text-align:center; font-size:9px;}
+  .meta b{display:block;font-size:9.5px;margin-bottom:1px}
+  h2{color:#0f1f38; font-size:11px; border-bottom:2px solid #0070c9; padding-bottom:3px; margin:10px 0 5px;}
+  .diagram{background:#f8fbff;border:1px solid #d8e6f5;border-radius:8px;padding:9px 11px;margin:6px 0; page-break-inside: avoid;}
+  .layer{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:flex-start;margin:6px 0;}
+  .box{border:1px solid #9fb6d8;border-radius:7px;padding:7px 10px;background:#fff;min-width:160px;position:relative;}
+  .box h3{margin:0 0 3px;font-size:10px;color:#0070c9;font-weight:700;}
+  .box p{margin:2px 0;font-size:8.5px;color:#334155;}
+  .box .owner{font-size:8px;font-weight:700;color:#155e75;margin-top:4px;display:block;}
+  .arrow{color:#6b7a93;font-size:10px;align-self:center;white-space:nowrap;}
+  .legend{display:flex;gap:9px;margin-top:7px;font-size:8.5px;color:#52627b}
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .dot.edge{background:#0f1f38}
+  .dot.ai{background:#7dd3fc}
+  .dot.api{background:#0070c9}
+  .dot.db{background:#166534}
+  .dot.ui{background:#be185d}
+  .footer{border-top:1px solid #d8e6f5;margin-top:8px;padding-top:4px;color:#6b7a93;font-size:8px;display:flex;justify-content:space-between}
+  .team{background:#eaf4ff;border:1px solid #b9d9ff;border-left:4px solid #0070c9;border-radius:8px;padding:7px 10px;margin:6px 0}
+  .team ul{margin:2px 0;padding-left:14px}
+  .team li{margin:1.5px 0;font-size:9px}
+  .note{background:#fef3c7;border:1px solid #e5b84d;border-left:4px solid #d97706;border-radius:8px;padding:7px 10px;margin:6px 0;font-size:9px}
+  table{width:100%;border-collapse:collapse;font-size:8px;margin:5px 0}
+  th{background:#0f1f38;color:#fff;text-align:left;padding:4px;font-size:8px;text-transform:uppercase}
+  td{padding:4px;border-bottom:1px solid #e6eef8;vertical-align:top}tr:nth-child(even) td{background:#f7faff}
+  @media print{.diagram,.team,.note,table{break-inside:avoid}}
+</style>
+</head><body>
+<div class="hero"><h1>Project Architecture - Block Diagram</h1><p>Smart College Surveillance &amp; Smart Security Platform (College Scope)</p></div>
+<div class="meta">
+  <div><b>Task</div><div class="v">Task 10 - Architecture block diagram (one page)</div></div>
+  <div><b>Owner</div><div class="v">All six team members</div></div>
+  <div><b>Date</div><div class="v">9 Nov 2026</div></div>
+</div>
+
+<h2>High-Level Architecture</h2>
+<div class="diagram">
+  <div style="text-align:center;font-weight:700;color:#0f1f38;font-size:11.5px;margin-bottom:6px;">Data Flow</div>
+  <div class="layer">
+    <div class="box">
+      <h3>Edge / Cameras</h3>
+      <p>RTSP streams (CAM-001…004) + MediaMTX</p>
+      <span class="owner">Edge / IT</span>
+    </div>
+    <span class="arrow">RTSP</span>
+    <div class="box">
+      <h3>AI / ML Services</h3>
+      <p>Fight (Rahaf) • Smoking (Rana) • Tracking+Re-ID (Ahmed) • Health monitor</p>
+      <span class="owner">AI Team</span>
+    </div>
+    <span class="arrow">JSON/HTTP</span>
+    <div class="box">
+      <h3>Backend API (FastAPI)</h3>
+      <p>Alerts + cameras endpoints</p>
+      <span class="owner">Mohamed Gehad</span>
+    </div>
+  </div>
+  <div class="layer">
+    <span class="arrow">store/query</span>
+    <div class="box">
+      <h3>Database (PostgreSQL + PostGIS)</h3>
+      <p>12 tables: alerts, cameras, users, sites, camera_links, alert_actions, camera_health_events + Phase-2</p>
+      <span class="owner">Mohamed Gehad</span>
+    </div>
+    <span class="arrow">clips/recordings</span>
+    <div class="box">
+      <h3>Object Storage (MinIO/S3)</h3>
+      <p>Alert clips, segments, embeddings</p>
+      <span class="owner">Backend + AI</span>
+    </div>
+    <span class="arrow">WebSocket/JSON</span>
+    <div class="box">
+      <h3>Dashboard (React)</h3>
+      <p>Camera grid, alert queue, health panel</p>
+      <span class="owner">M. Gehad + M. Ezzat</span>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="dot edge"></span> Edge/Media</span>
+  <span><span class="dot ai"></span> AI/ML</span>
+  <span><span class="dot api"></span> Backend API</span>
+  <span><span class="dot db"></span> Database</span>
+  <span><span class="dot ui"></span> Dashboard/UI</span>
+</div>
+
+<h2>Team Ownership</h2>
+<div class="team">
+  <ul>
+    <li><b>Mohamed Gehad</b> — Backend/Frontend: DB schema (12 tables), API, ER diagram, validation.</li>
+    <li><b>Ahmed Amr</b> — Data Scientist: OSNet Re-ID, ByteTrack, tracking JSON.</li>
+    <li><b>Rana Yasser</b> — Smoking Detection: YOLOv8n, dataset report.</li>
+    <li><b>Rahaf</b> — Fight Detection: precision, recall, F1, confusion matrix.</li>
+    <li><b>Mahmoud Khamis</b> — Dataset inventory: labels, license, splits, metrics.</li>
+    <li><b>Mohamed Ezzat</b> — QA/Frontend: test cases, bugs, alert-display checklist.</li>
+  </ul>
+</div>
+
+<h2>Component Responsibilities</h2>
+<table>
+<tr><th>Component</th><th>Technology</th><th>Owner</th><th>Sprint</th></tr>
+<tr><td>Cameras + MediaMTX</td><td>RTSP</td><td>Edge / IT</td><td>1</td></tr>
+<tr><td>Fight Detection</td><td>YOLOv8n</td><td>Rahaf</td><td>1</td></tr>
+<tr><td>Smoking Detection</td><td>YOLOv8n</td><td>Rana</td><td>1</td></tr>
+<tr><td>Tracking + Re-ID</td><td>ByteTrack + OSNet</td><td>Ahmed</td><td>1</td></tr>
+<tr><td>Alerts API</td><td>FastAPI / PostgreSQL</td><td>Mohamed Gehad</td><td>1-2</td></tr>
+<tr><td>Database</td><td>PostgreSQL 16 + PostGIS</td><td>Mohamed Gehad</td><td>1</td></tr>
+<tr><td>Object Storage</td><td>MinIO / S3</td><td>Backend + AI</td><td>2</td></tr>
+<tr><td>Dashboard</td><td>React</td><td>M. Gehad + M. Ezzat</td><td>2</td></tr>
+<tr><td>QA / Tests</td><td>pytest + bug log</td><td>Mohamed Ezzat</td><td>1</td></tr>
+</table>
+
+<div class="note"><b>Note:</b> One-page architecture for Task 10. Consolidated team view; each member produces their own version to be compared next week.</div>
+
+<div class="footer"><span>Cloud Surveillance &amp; Smart Security Platform - Architecture Block Diagram</span><span>Task 10 • 9 Nov 2026</span></div>
+</body></html>

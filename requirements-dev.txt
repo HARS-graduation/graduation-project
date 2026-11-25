@@ -1,0 +1,4 @@
+# Development-only tools (schema validation, future test suite).
+# Not needed to run the API.
+pgserver>=0.1.4
+psycopg2-binary>=2.9

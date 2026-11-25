@@ -1,0 +1,11 @@
+{
+  "event_id": "8f14e45f-ceea-4a67-9d2b-1b7c1e2f3a41",
+  "event_type": "fight",
+  "camera_id": "CAM-002",
+  "timestamp": "2026-10-27T14:32:10.123Z",
+  "confidence": 0.87,
+  "track_id": "trk-12",
+  "global_id": "GID-000001",
+  "clip_uri": "s3://surveillance-alerts/2026/10/27/CAM-002/8f14e45f.mp4",
+  "reason": "two persons, high motion energy for 3 consecutive seconds"
+}

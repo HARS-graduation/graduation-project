@@ -1,0 +1,12 @@
+{
+  "error": {
+    "code": "validation_error",
+    "message": "Request validation failed.",
+    "details": [
+      {
+        "field": "confidence",
+        "message": "Input should be less than or equal to 1"
+      }
+    ]
+  }
+}
